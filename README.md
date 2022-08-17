@@ -1,6 +1,6 @@
 # Xsd2Rb - a RubyGem to simplify and automate XML generation in Ruby
 ## Summary
-This readme covers the xsd2rb project, originally written by Chris To (https://github.com/chrt00) in April 2017. The code is not present in this repo as it was written for Jane Inc. https://github.com/janeapp for their Telus eClaims integration. The three month time investment used to write this library helped automate 100,000's of code changes. This document is not comprehensive or 100% accurate as I am recalling from memory.
+This readme covers the xsd2rb project, originally written by Chris To (https://github.com/chrt00) in April 2017. The code is not present in this repo as it was written for Jane Inc. https://github.com/janeapp for their Telus eClaims integration. The three month time investment used to write this library helped automate 100,000's of lines in code changes. This document is not comprehensive or 100% accurate as I am recalling from memory.
 
 ## Motivation
 The Telus eClaims insurance integration process began with using Savon https://github.com/savonrb/savon, a gem that used a hash-based DSL to generate XML. However, due the complexity of the HL7 XML standard, it was impossible to generate correct SOAP XML after a few levels of nesting. This required a new solution to generate XML in Ruby.
