@@ -1,6 +1,6 @@
-# xsd2rb - a rubygem to simplify and automate XML generation in Ruby
+# Xsd2Rb - a RubyGem to simplify and automate XML generation in Ruby
 ## Summary
-This readme covers the xsd2rb project, originally written by Chris To (https://github.com/chrt00) in April 2017. The code is not present in this repo as it was written for Jane Inc. https://github.com/janeapp for their Telus eClaims integration. The three month time investment used to write this library helped automate 100,000's of code changes. This document is not comprehensive as I am recalling from memory.
+This readme covers the xsd2rb project, originally written by Chris To (https://github.com/chrt00) in April 2017. The code is not present in this repo as it was written for Jane Inc. https://github.com/janeapp for their Telus eClaims integration. The three month time investment used to write this library helped automate 100,000's of code changes. This document is not comprehensive or 100% accurate as I am recalling from memory.
 
 ## Motivation
 The Telus eClaims insurance integration process began with using Savon https://github.com/savonrb/savon, a gem that used a hash-based DSL to generate XML. However, due the complexity of the HL7 XML standard, it was impossible to generate correct SOAP XML after a few levels of nesting. This required a new solution to generate XML in Ruby.
@@ -21,7 +21,22 @@ The goals were to:
 
 ## Design
 
-### xsd2rb XML node pattern
+The gem is meant to be used via command line like:
+`xsd2rb MODULE_NAME MY_XSD_FOLDER`
+Running the command would output Ruby files in a folder like `FOLDER_NAME_output`
+
+The contents of the folder would have a single file to include all the generated code and also link the mixins, with the intent that these code files would be transferred to its own rubygem.
+
+The code would execute like: 
+- Scan directory for schema files, per schema file:
+  - Parse xsd
+  - Read fields and child nodes, generating objects containing validation and structure information
+  - Generate Xsd2Rb::XmlNode from generated object list above, defining:
+    - basic validations
+    - initializer parameters
+    - class structure pattern
+
+### Xsd2Rb::XmlNode pattern
 
 #### Validations
 Things that were validated automatically:
@@ -30,10 +45,30 @@ Things that were validated automatically:
 - Child nodes
   - Valid child node types according to schema
   - Minimum/maximum occurance of each node
+
+#### Mixin Callbacks
+A hook would be called in the validation phase. The call would be defined in the mixin; usually the method call would be an empty method (emulating an interface pattern in Java). Tthe plan was to allow for addition of more callbacks as Xsd2Rb was extended and improved.
   
 #### Mixins
+Mixins were meant to be included in the automatically generated classes.
+The implenentation at the time I believe was a crude monkeypatch solution, that I would have done differently given more time.
+
+I believe the implementation at the time was that there was an `Xsd2Rb::Mixin` class that implemented an interface, and the automatically generated class would have an internal class defined like:
+
+```
+module MODULE_NAME
+  class XSD_SCHEMA_NAME
+    ...
+    class Mixin < Xsd2Rb::Base
+       ...
+    end
+  end
+end
+```
+Any user written callbacks in the `XSD_MODULE_NAME::XSD_SCHEMA_NAME::Mixin` monkeypatch would then be run.
 
 ### xsd parser
+Thi
 
 ### code generation
 
