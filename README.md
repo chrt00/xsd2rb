@@ -3,7 +3,7 @@
 This readme covers the xsd2rb project, originally written by Chris To (https://github.com/chrt00) in April 2017. The code is not present in this repo as it was written for Jane Inc. https://github.com/janeapp for their Telus eClaims integration. The three month time investment used to write this library helped automate 100,000's of lines in code changes. This document is not comprehensive or 100% accurate as I am recalling from memory.
 
 ## Motivation
-The Telus eClaims insurance integration process began with using Savon https://github.com/savonrb/savon, a gem that used a hash-based DSL to generate XML. However, due the complexity of the HL7 XML standard, it was impossible to generate correct SOAP XML after a few levels of nesting. This required a new solution to generate XML in Ruby.
+The Telus eClaims insurance integration process began with using Savon https://github.com/savonrb/savon, a gem that used a hash-based DSL to generate XML. However, due the complexity of the HL7 XML standard (https://www.hl7.org/implement/standards/product_brief.cfm?product_id=185), it was impossible to generate correct SOAP XML after a few levels of nesting. This required a new solution to generate XML in Ruby.
 
 Using Java or other languages with mature XML toolchains was not an option due to the small team not having any experience or logistics to use anything but Ruby.
 
@@ -73,6 +73,8 @@ Thi
 ### code generation
 
 ## Testing
+Generation of practical SOAP envelopes from the eClaims project was used to test XML and code correctness.
 
 ## Caveats
 - DSL was not 100% XML standard compliant - some xml attribute features unsupported
+- Monkeypatch pattern should be changed
